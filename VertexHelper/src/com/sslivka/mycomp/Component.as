@@ -71,6 +71,23 @@ package com.sslivka.mycomp
 			return (_alpha<<24)|(r<<16)|(g << 8)|b;
 		}
 		
+		/* bmdDrawLineH - нарисовать вертикальную линию тени
+		 * bmd:BitmapData - объект BitmapData
+		 * x:int, y:int - позиция от которой начинается рисование
+		 * length:int - длина линии
+		 * alpha1:Number = 0.0, alpha2:Number = 1.0 - пределы непрозрачности
+		 * 
+		 * шаг градиента определяется по формуле = (alpha2 - alpha1)/length
+		 */
+		protected function bmdDrawShadowLine(bmd:BitmapData, x:int, y:int, length:int, alpha1:Number = 0.0, alpha2:Number = 1.0):void
+		{
+			var step:Number = (alpha2 - alpha1) / length;
+			for (var i:uint = 0; i < length; i++) {
+				bmd.setPixel32(x, y + i, this.getHex(0, 0, 0, alpha1));
+				alpha1 = alpha1 + step;
+			}
+		}
+		
 	}
 
 }
